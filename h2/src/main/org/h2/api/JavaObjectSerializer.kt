@@ -3,7 +3,7 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.api;
+package org.h2.api
 
 /**
  * Custom serialization mechanism for java objects being stored in column of
@@ -11,7 +11,7 @@ package org.h2.api;
  *
  * @author Sergi Vladykin
  */
-public interface JavaObjectSerializer {
+interface JavaObjectSerializer {
 
     /**
      * Serialize object to byte array.
@@ -20,7 +20,8 @@ public interface JavaObjectSerializer {
      * @return the byte array of the serialized object
      * @throws Exception on failure
      */
-    byte[] serialize(Object obj) throws Exception;
+    @Throws(Exception::class)
+    fun serialize(obj: Any?): ByteArray
 
     /**
      * Deserialize object from byte array.
@@ -29,6 +30,6 @@ public interface JavaObjectSerializer {
      * @return the object
      * @throws Exception on failure
      */
-    Object deserialize(byte[] bytes) throws Exception;
-
+    @Throws(Exception::class)
+    fun deserialize(bytes: ByteArray): Any?
 }

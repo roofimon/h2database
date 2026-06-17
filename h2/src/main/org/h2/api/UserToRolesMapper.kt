@@ -3,13 +3,11 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: Alessandro Ventura
  */
-package org.h2.api;
+package org.h2.api
 
-import java.util.Collection;
-
-import org.h2.security.auth.AuthenticationException;
-import org.h2.security.auth.AuthenticationInfo;
-import org.h2.security.auth.Configurable;
+import org.h2.security.auth.AuthenticationException
+import org.h2.security.auth.AuthenticationInfo
+import org.h2.security.auth.Configurable
 
 /**
  * A class that implement this interface can be used during authentication to
@@ -18,7 +16,7 @@ import org.h2.security.auth.Configurable;
  * <b>This feature is experimental and subject to change</b>
  * </p>
  */
-public interface UserToRolesMapper extends Configurable {
+interface UserToRolesMapper : Configurable {
 
     /**
      * Map user identified by authentication info to a set of granted roles.
@@ -29,5 +27,6 @@ public interface UserToRolesMapper extends Configurable {
      * @throws AuthenticationException
      *             on authentication exception
      */
-    Collection<String> mapUserToRoles(AuthenticationInfo authenticationInfo) throws AuthenticationException;
+    @Throws(AuthenticationException::class)
+    fun mapUserToRoles(authenticationInfo: AuthenticationInfo): Collection<String>
 }

@@ -3,16 +3,16 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.api;
+package org.h2.api
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.Connection
+import java.sql.SQLException
 
 /**
  * A user-defined aggregate function needs to implement this interface.
  * The class must be public and must have a public non-argument constructor.
  */
-public interface Aggregate {
+interface Aggregate {
 
     /**
      * This method is called when the aggregate function is used.
@@ -21,7 +21,8 @@ public interface Aggregate {
      * @param conn a connection to the database
      * @throws SQLException on SQL exception
      */
-    default void init(Connection conn) throws SQLException {
+    @Throws(SQLException::class)
+    fun init(conn: Connection) {
         // Do nothing by default
     }
 
@@ -35,7 +36,8 @@ public interface Aggregate {
      * @return the H2 data type of the result
      * @throws SQLException if the number/type of parameters passed is incorrect
      */
-    int getInternalType(int[] inputTypes) throws SQLException;
+    @Throws(SQLException::class)
+    fun getInternalType(inputTypes: IntArray): Int
 
     /**
      * This method is called once for each row.
@@ -45,7 +47,8 @@ public interface Aggregate {
      * @param value the value(s) for this row
      * @throws SQLException on failure
      */
-    void add(Object value) throws SQLException;
+    @Throws(SQLException::class)
+    fun add(value: Any?)
 
     /**
      * This method returns the computed aggregate value. This method must
@@ -55,6 +58,6 @@ public interface Aggregate {
      * @return the aggregated value
      * @throws SQLException on failure
      */
-    Object getResult() throws SQLException;
-
+    @Throws(SQLException::class)
+    fun getResult(): Any?
 }

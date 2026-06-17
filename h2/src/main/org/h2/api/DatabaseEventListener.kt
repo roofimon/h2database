@@ -3,10 +3,10 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.api;
+package org.h2.api
 
-import java.sql.SQLException;
-import java.util.EventListener;
+import java.sql.SQLException
+import java.util.EventListener
 
 /**
  * A class that implements this interface can get notified about exceptions
@@ -14,49 +14,52 @@ import java.util.EventListener;
  * connecting to a database. Example database URL:
  * jdbc:h2:./test;DATABASE_EVENT_LISTENER='com.acme.DbListener'
  */
-public interface DatabaseEventListener extends EventListener {
+interface DatabaseEventListener : EventListener {
 
-    /**
-     * This state is used when scanning the database file.
-     */
-    int STATE_SCAN_FILE = 0;
+    companion object {
 
-    /**
-     * This state is used when re-creating an index.
-     */
-    int STATE_CREATE_INDEX = 1;
+        /**
+         * This state is used when scanning the database file.
+         */
+        const val STATE_SCAN_FILE: Int = 0
 
-    /**
-     * This state is used when re-applying the transaction log or rolling back
-     * uncommitted transactions.
-     */
-    int STATE_RECOVER = 2;
+        /**
+         * This state is used when re-creating an index.
+         */
+        const val STATE_CREATE_INDEX: Int = 1
 
-    /**
-     * This state is used during the BACKUP command.
-     */
-    int STATE_BACKUP_FILE = 3;
+        /**
+         * This state is used when re-applying the transaction log or rolling back
+         * uncommitted transactions.
+         */
+        const val STATE_RECOVER: Int = 2
 
-    /**
-     * This state is used after re-connecting to a database (if auto-reconnect
-     * is enabled).
-     */
-    int STATE_RECONNECTED = 4;
+        /**
+         * This state is used during the BACKUP command.
+         */
+        const val STATE_BACKUP_FILE: Int = 3
 
-    /**
-     * This state is used when a query starts.
-     */
-    int STATE_STATEMENT_START = 5;
+        /**
+         * This state is used after re-connecting to a database (if auto-reconnect
+         * is enabled).
+         */
+        const val STATE_RECONNECTED: Int = 4
 
-    /**
-     * This state is used when a query ends.
-     */
-    int STATE_STATEMENT_END = 6;
+        /**
+         * This state is used when a query starts.
+         */
+        const val STATE_STATEMENT_START: Int = 5
 
-    /**
-     * This state is used for periodic notification during long-running queries.
-     */
-    int STATE_STATEMENT_PROGRESS = 7;
+        /**
+         * This state is used when a query ends.
+         */
+        const val STATE_STATEMENT_END: Int = 6
+
+        /**
+         * This state is used for periodic notification during long-running queries.
+         */
+        const val STATE_STATEMENT_PROGRESS: Int = 7
+    }
 
     /**
      * This method is called just after creating the object.
@@ -66,14 +69,14 @@ public interface DatabaseEventListener extends EventListener {
      *
      * @param url - the database URL
      */
-    default void init(String url) {
+    fun init(url: String) {
     }
 
     /**
      * This method is called after the database has been opened. It is safe to
      * connect to the database and execute statements at this point.
      */
-    default void opened() {
+    fun opened() {
     }
 
     /**
@@ -82,7 +85,7 @@ public interface DatabaseEventListener extends EventListener {
      * @param e the exception
      * @param sql the SQL statement
      */
-    default void exceptionThrown(SQLException e, String sql) {
+    fun exceptionThrown(e: SQLException, sql: String) {
     }
 
     /**
@@ -98,7 +101,7 @@ public interface DatabaseEventListener extends EventListener {
      * @param x the current position
      * @param max the highest possible value or 0 if unknown
      */
-    default void setProgress(int state, String name, long x, long max) {
+    fun setProgress(state: Int, name: String, x: Long, max: Long) {
     }
 
     /**
@@ -106,7 +109,6 @@ public interface DatabaseEventListener extends EventListener {
      * to connect to the database and execute statements at this point, however
      * the connection must be closed before the method returns.
      */
-    default void closingDatabase() {
+    fun closingDatabase() {
     }
-
 }

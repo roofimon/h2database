@@ -3,35 +3,38 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.api;
+package org.h2.api
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.Connection
+import java.sql.SQLException
 
 /**
  * A class that implements this interface can be used as a trigger.
  */
-public interface Trigger {
+interface Trigger {
 
-    /**
-     * The trigger is called for INSERT statements.
-     */
-    int INSERT = 1;
+    companion object {
 
-    /**
-     * The trigger is called for UPDATE statements.
-     */
-    int UPDATE = 2;
+        /**
+         * The trigger is called for INSERT statements.
+         */
+        const val INSERT: Int = 1
 
-    /**
-     * The trigger is called for DELETE statements.
-     */
-    int DELETE = 4;
+        /**
+         * The trigger is called for UPDATE statements.
+         */
+        const val UPDATE: Int = 2
 
-    /**
-     * The trigger is called for SELECT statements.
-     */
-    int SELECT = 8;
+        /**
+         * The trigger is called for DELETE statements.
+         */
+        const val DELETE: Int = 4
+
+        /**
+         * The trigger is called for SELECT statements.
+         */
+        const val SELECT: Int = 8
+    }
 
     /**
      * This method is called by the database engine once when initializing the
@@ -51,8 +54,11 @@ public interface Trigger {
      *            combination (this parameter is a bit field)
      * @throws SQLException on SQL exception
      */
-    default void init(Connection conn, String schemaName, String triggerName,
-            String tableName, boolean before, int type) throws SQLException {
+    @Throws(SQLException::class)
+    fun init(
+        conn: Connection, schemaName: String, triggerName: String,
+        tableName: String, before: Boolean, type: Int
+    ) {
         // Does nothing by default
     }
 
@@ -78,8 +84,8 @@ public interface Trigger {
      *            DELETE)
      * @throws SQLException if the operation must be undone
      */
-    void fire(Connection conn, Object[] oldRow, Object[] newRow)
-            throws SQLException;
+    @Throws(SQLException::class)
+    fun fire(conn: Connection, oldRow: Array<Any?>?, newRow: Array<Any?>?)
 
     /**
      * This method is called when the database is closed.
@@ -88,7 +94,8 @@ public interface Trigger {
      *
      * @throws SQLException on SQL exception
      */
-    default void close() throws SQLException {
+    @Throws(SQLException::class)
+    fun close() {
         // Does nothing by default
     }
 
@@ -97,8 +104,8 @@ public interface Trigger {
      *
      * @throws SQLException on SQL exception
      */
-    default void remove() throws SQLException {
+    @Throws(SQLException::class)
+    fun remove() {
         // Does nothing by default
     }
-
 }

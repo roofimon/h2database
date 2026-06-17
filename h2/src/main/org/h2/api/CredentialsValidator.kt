@@ -3,10 +3,10 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: Alessandro Ventura
  */
-package org.h2.api;
+package org.h2.api
 
-import org.h2.security.auth.AuthenticationInfo;
-import org.h2.security.auth.Configurable;
+import org.h2.security.auth.AuthenticationInfo
+import org.h2.security.auth.Configurable
 
 /**
  * A class that implement this interface can be used to validate credentials
@@ -15,7 +15,7 @@ import org.h2.security.auth.Configurable;
  * <b>This feature is experimental and subject to change</b>
  * </p>
  */
-public interface CredentialsValidator extends Configurable {
+interface CredentialsValidator : Configurable {
 
     /**
      * Validate user credential.
@@ -27,6 +27,6 @@ public interface CredentialsValidator extends Configurable {
      *             any exception occurred (invalid credentials or internal
      *             issue) prevent user login
      */
-    boolean validateCredentials(AuthenticationInfo authenticationInfo) throws Exception;
-
+    @Throws(Exception::class)
+    fun validateCredentials(authenticationInfo: AuthenticationInfo): Boolean
 }
