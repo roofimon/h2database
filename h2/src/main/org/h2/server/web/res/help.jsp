@@ -15,8 +15,9 @@ Initial Developer: H2 Group
 <script type="text/javascript">
 <!--
 function set(s) {
-    if (parent.h2query) {
-        parent.h2query.document.h2query.sql.value = s;
+    var sql = document.getElementById('sql');
+    if (sql) {
+        sql.value = s;
     }
 }
 //-->
@@ -27,22 +28,22 @@ function set(s) {
 <h3>${text.helpImportantCommands}</h3>
 <table>
 <tr>
-    <td style="padding:0px"><img src="icon_help.gif" alt="${text.a.help}"/></td>
+    <td style="padding:0px"><img src="icon_help.svg" alt="${text.a.help}"/></td>
     <td style="vertical-align: middle;"></td>
     <td style="vertical-align: middle;">${text.helpDisplayThis}</td>
 </tr>
 <tr>
-    <td style="padding:0px"><img src="icon_history.gif" alt="${text.toolbar.history}"/></td>
+    <td style="padding:0px"><img src="icon_history.svg" alt="${text.toolbar.history}"/></td>
     <td style="vertical-align: middle;"></td>
     <td style="vertical-align: middle;">${text.helpCommandHistory}</td>
 </tr>
 <tr>
-    <td style="padding:0px"><img src="icon_run.gif" alt="${text.toolbar.run}"/></td>
+    <td style="padding:0px"><img src="icon_run.svg" alt="${text.toolbar.run}"/></td>
     <td style="vertical-align: middle;">${text.key.ctrl}+${text.key.enter}</td>
     <td style="vertical-align: middle;">${text.helpExecuteCurrent}</td>
 </tr>
 <tr>
-    <td style="padding:0px"><img src="icon_run_selected.gif" alt="${text.toolbar.runSelected}"/></td>
+    <td style="padding:0px"><img src="icon_run_selected.svg" alt="${text.toolbar.runSelected}"/></td>
     <td style="vertical-align: middle;">${text.key.shift}+${text.key.enter}</td>
     <td style="vertical-align: middle;">${text.helpExecuteSelected}</td>
 </tr>
@@ -52,7 +53,7 @@ function set(s) {
     <td style="vertical-align: middle;">${text.toolbar.autoComplete}</td>
 </tr>
 <tr>
-    <td style="padding:0px"><img src="icon_disconnect.gif" alt="${text.toolbar.disconnect}"/></td>
+    <td style="padding:0px"><img src="icon_disconnect.svg" alt="${text.toolbar.disconnect}"/></td>
     <td style="vertical-align: middle;"></td>
     <td style="vertical-align: middle;">${text.helpDisconnect}</td>
 </tr>

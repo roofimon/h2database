@@ -22,18 +22,16 @@ function addTable(name, columns, i) {
 }
 
 function ins(s, isTable) {
-    if (parent.h2query) {
-        if (parent.h2query.insertText) {
-            parent.h2query.insertText(s, isTable);
-        }
+    // same-document: defined in app.js
+    if (typeof insertText == 'function') {
+        insertText(s, isTable);
     }
 }
 
 function refreshQueryTables() {
-    if (parent.h2query) {
-        if (parent.h2query.refreshTables) {
-            parent.h2query.refreshTables();
-        }
+    // same-document: defined in app.js
+    if (typeof refreshTables == 'function') {
+        refreshTables();
     }
 }
 
@@ -48,9 +46,9 @@ function goToTable(s) {
 
 function loadIcons() {
     icons[0] = new Image();
-    icons[0].src = "tree_minus.gif";
+    icons[0].src = "tree_minus.svg";
     icons[1] = new Image();
-    icons[1].src = "tree_plus.gif";
+    icons[1].src = "tree_plus.svg";
 }
 
 function Node(level, type, icon, text, link) {
@@ -65,43 +63,48 @@ function setNode(id, level, type, icon, text, link) {
     nodeList[id] = new Node(level, type, icon, text, link);
 }
 
-function writeDiv(i, level, dist) {
+function divStr(i, dist) {
     if (dist>0) {
-        document.write("<div id=\"div"+(i-1)+"\" style=\"display: none;\">");
-    } else {
-        while (dist++<0) {
-            document.write("</div>");
-        }
+        return "<div id=\"div"+(i-1)+"\" style=\"display: none;\">";
     }
+    var s = "";
+    while (dist++<0) {
+        s += "</div>";
+    }
+    return s;
 }
 
-function writeTree() {
+// builds the tree markup as a string (no document.write, so it can be
+// assigned into the live single-page document after load)
+function buildTree() {
     loadIcons();
+    var out = "";
     var last=nodeList[0];
     for (var i=0; i<nodeList.length; i++) {
         var node=nodeList[i];
-        writeDiv(i, node.level, node.level-last.level);
+        out += divStr(i, node.level-last.level);
         last=node;
         var j=node.level;
         while (j-->0) {
-            document.write("<img src=\"tree_empty.gif\"/>");
+            out += "<img src=\"tree_empty.svg\"/>";
         }
         if (node.type==1) {
             if (i < nodeList.length-1 && nodeList[i+1].level > node.level) {
-                document.write("<img onclick=\"hit("+i+");\" id=\"join"+i+"\" src=\"tree_plus.gif\"/>");
+                out += "<img onclick=\"hit("+i+");\" id=\"join"+i+"\" src=\"tree_plus.svg\"/>";
             } else {
-                document.write("<img src=\"tree_empty.gif\"/>");
+                out += "<img src=\"tree_empty.svg\"/>";
             }
         }
-        document.write("<img src=\"tree_"+node.icon+".gif\"/>&nbsp;");
+        out += "<img src=\"tree_"+node.icon+".svg\"/>&nbsp;";
         if (node.link==null) {
-            document.write(node.text);
+            out += node.text;
         } else {
-            document.write("<a id='"+node.text+"' href=\""+node.link+"\" >"+node.text+"</a>");
+            out += "<a id='"+node.text+"' href=\""+node.link+"\" >"+node.text+"</a>";
         }
-        document.write("<br />");
+        out += "<br />";
     }
-    writeDiv(0, 0, -last.type);
+    out += divStr(0, -last.type);
+    return out;
 }
 
 function hit(i) {

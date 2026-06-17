@@ -148,6 +148,9 @@ public class WebApp {
         } else if ("gif".equals(suffix)) {
             mimeType = "image/gif";
             cache = true;
+        } else if ("svg".equals(suffix)) {
+            mimeType = "image/svg+xml";
+            cache = true;
         } else if ("css".equals(suffix)) {
             cache = true;
             mimeType = "text/css";
@@ -1042,7 +1045,7 @@ public class WebApp {
             session.put("user", user);
             session.remove("error");
             settingSave();
-            return "frame.jsp";
+            return "app.jsp";
         } catch (Exception e) {
             session.put("error", getLoginError(e, isH2));
             return "login.jsp";
@@ -1197,9 +1200,8 @@ public class WebApp {
                     sqlUpper.contains("DROP") ||
                     sqlUpper.contains("ALTER") ||
                     sqlUpper.contains("RUNSCRIPT")) {
-                String sessionId = attributes.getProperty("jsessionid");
-                buff.append("<script type=\"text/javascript\">parent['h2menu'].location='tables.do?jsessionid=")
-                        .append(sessionId).append("';</script>");
+                buff.append("<script type=\"text/javascript\">"
+                        + "if (window.refreshTree) refreshTree();</script>");
             }
             Statement stat;
             DbContents contents = session.getContents();
@@ -1477,10 +1479,9 @@ public class WebApp {
                 "<tr><th></th><th>Command</th></tr>");
         for (int i = history.size() - 1; i >= 0; i--) {
             String sql = history.get(i);
-            buff.append("<tr><td><a href=\"getHistory.do?id=").
-                append(i).
-                append("&jsessionid=${sessionId}\" target=\"h2query\" >").
-                append("<img width=16 height=16 src=\"ico_write.gif\" " +
+            buff.append("<tr><td><a href=\"#\" " +
+                        "onclick=\"insertHistory(this);return false;\" >").
+                append("<img width=16 height=16 src=\"ico_write.svg\" " +
                         "onmouseover = \"this.className ='icon_hover'\" ").
                 append("onmouseout = \"this.className ='icon'\" " +
                         "class=\"icon\" alt=\"${text.resultEdit.edit}\" ").
@@ -1529,8 +1530,7 @@ public class WebApp {
         StringBuilder buff = new StringBuilder();
         if (edit) {
             buff.append("<form id=\"editing\" name=\"editing\" method=\"post\" " +
-                    "action=\"editResult.do?jsessionid=${sessionId}\" " +
-                    "id=\"mainForm\" target=\"h2result\">" +
+                    "action=\"editResult.do?jsessionid=${sessionId}\">" +
                     "<input type=\"hidden\" name=\"op\" value=\"1\" />" +
                     "<input type=\"hidden\" name=\"row\" value=\"\" />" +
                     "<table class=\"resultSet\" cellspacing=\"0\" cellpadding=\"0\" id=\"editTable\">");
@@ -1629,7 +1629,7 @@ public class WebApp {
                         append(rs.getRow()).
                         append(",'${sessionId}', '${text.resultEdit.save}', " +
                                 "'${text.resultEdit.cancel}'").
-                        append(")\" width=16 height=16 src=\"ico_write.gif\" " +
+                        append(")\" width=16 height=16 src=\"ico_write.svg\" " +
                                 "onmouseover = \"this.className ='icon_hover'\" " +
                                 "onmouseout = \"this.className ='icon'\" " +
                                 "class=\"icon\" alt=\"${text.resultEdit.edit}\" " +
@@ -1638,7 +1638,7 @@ public class WebApp {
                         append(rs.getRow()).
                         append(",'${sessionId}', '${text.resultEdit.delete}', " +
                                 "'${text.resultEdit.cancel}'").
-                        append(")\" width=16 height=16 src=\"ico_remove.gif\" " +
+                        append(")\" width=16 height=16 src=\"ico_remove.svg\" " +
                                 "onmouseover = \"this.className ='icon_hover'\" " +
                                 "onmouseout = \"this.className ='icon'\" " +
                                 "class=\"icon\" alt=\"${text.resultEdit.delete}\" " +
@@ -1676,7 +1676,7 @@ public class WebApp {
             buff.append("<tr><td>").
                 append("<img onclick=\"javascript:editRow(-1, " +
                         "'${sessionId}', '${text.resultEdit.save}', '${text.resultEdit.cancel}'").
-                append(")\" width=16 height=16 src=\"ico_add.gif\" " +
+                append(")\" width=16 height=16 src=\"ico_add.svg\" " +
                         "onmouseover = \"this.className ='icon_hover'\" " +
                         "onmouseout = \"this.className ='icon'\" " +
                         "class=\"icon\" alt=\"${text.resultEdit.add}\" " +
@@ -1704,7 +1704,8 @@ public class WebApp {
         if (!edit && isUpdatable && allowEdit) {
             buff.append("<br /><br />" +
                     "<form name=\"editResult\" method=\"post\" " +
-                    "action=\"query.do?jsessionid=${sessionId}\" target=\"h2result\">" +
+                    "action=\"query.do?jsessionid=${sessionId}\" " +
+                    "onsubmit=\"return submitForm(this);\">" +
                     "<input type=\"submit\" class=\"button\" " +
                     "value=\"${text.resultEdit.editResult}\" />" +
                     "<input type=\"hidden\" name=\"sql\" value=\"@edit ").

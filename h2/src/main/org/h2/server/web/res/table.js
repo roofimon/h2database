@@ -4,8 +4,6 @@
  *  * Initial Developer: H2 Group
  */
 
-addEvent(window, "load", initSort);
-
 function addEvent(elm, evType, fn, useCapture) {
     // addEvent and removeEvent
     // cross-browser event handling for IE5+,  NS6 and Mozilla
@@ -26,7 +24,9 @@ function initSort() {
         // don't allow sorting while editing
         return;
     }
-    var tables = document.getElementsByTagName("table");
+    // only the result panel's tables (not the toolbar / autocomplete tables)
+    var out = document.getElementById('output');
+    var tables = (out ? out : document).getElementsByTagName("table");
     for (var i=0; i<tables.length; i++) {
         table = tables[i];
         if (table.rows && table.rows.length > 0) {
@@ -47,8 +47,8 @@ function editRow(row, session, write, undo) {
     for(i=1; i<table.rows.length; i++) {
         var cell = table.rows[i].cells[0];
         if (i == y) {
-            var edit = '<img width=16 height=16 src="ico_ok.gif" onclick="editOk('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+write+'" title="'+write+'" border="1"/>';
-            var undo = '<img width=16 height=16 src="ico_undo.gif" onclick="editCancel('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+undo+'" title="'+undo+'" border="1"/>';
+            var edit = '<img width=16 height=16 src="ico_ok.svg" onclick="editOk('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+write+'" title="'+write+'" border="1"/>';
+            var undo = '<img width=16 height=16 src="ico_undo.svg" onclick="editCancel('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+undo+'" title="'+undo+'" border="1"/>';
             cell.innerHTML = edit + undo;
         } else {
             cell.innerHTML = '';
@@ -89,8 +89,8 @@ function deleteRow(row, session, write, undo) {
     for(i=1; i<table.rows.length; i++) {
         var cell = table.rows[i].cells[0];
         if (i == y) {
-            var edit = '<img width=16 height=16 src="ico_remove_ok.gif" onclick="deleteOk('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+write+'" title="'+write+'" border="1"/>';
-            var undo = '<img width=16 height=16 src="ico_undo.gif" onclick="editCancel('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+undo+'" title="'+undo+'" border="1"/>';
+            var edit = '<img width=16 height=16 src="ico_remove_ok.svg" onclick="deleteOk('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+write+'" title="'+write+'" border="1"/>';
+            var undo = '<img width=16 height=16 src="ico_undo.svg" onclick="editCancel('+row+')" onmouseover = "this.className =\'icon_hover\'" onmouseout = "this.className=\'icon\'" class="icon" alt="'+undo+'" title="'+undo+'" border="1"/>';
             cell.innerHTML = edit + undo;
         } else {
             cell.innerHTML = '';
@@ -108,7 +108,21 @@ function editFinish(row, res) {
     var editing = document.getElementById('editing');
     editing.row.value = row;
     editing.op.value = res;
-    editing.submit();
+    // same-document: post the edit and inject the refreshed result
+    var params = [];
+    for (var i = 0; i < editing.elements.length; i++) {
+        var e = editing.elements[i];
+        if (e.name) {
+            params.push(encodeURIComponent(e.name) + '=' + encodeURIComponent(e.value));
+        }
+    }
+    fetch(editing.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.join('&')
+    }).then(function(r) {
+        return r.text();
+    }).then(injectOutput);
 }
 
 function editCancel(row) {

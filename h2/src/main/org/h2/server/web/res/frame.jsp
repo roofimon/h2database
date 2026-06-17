@@ -10,7 +10,7 @@ Initial Developer: H2 Group
     <title>${text.a.title}</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
 </head>
-<frameset cols="*" rows="36,*" frameborder="1" framespacing="4" border="${frameset-border}" bordercolor="white">
+<frameset cols="*" rows="42,*" frameborder="1" framespacing="4" border="${frameset-border}" bordercolor="white">
     <frame noresize="noresize" frameborder="0" marginheight="0" marginwidth="0" src="header.jsp?jsessionid=${sessionId}" name="header" scrolling="no" />
     <frameset cols="200,*" rows="*" frameborder="1" framespacing="4" border="${frameset-border}" bordercolor="white">
         <frame frameborder="0" marginheight="0" marginwidth="0" src="tables.do?jsessionid=${sessionId}" name="h2menu" />

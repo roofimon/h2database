@@ -16,21 +16,21 @@ Initial Developer: H2 Group
             <tr class="toolbar">
                 <td class="toolbar">
                     <a href="logout.do?jsessionid=${sessionId}" target="_parent">
-                        <img src="icon_disconnect.gif"
+                        <img src="icon_disconnect.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.disconnect}"
                             title="${text.toolbar.disconnect}" border="1"/>
                     </a>
-                    <img src="icon_line.gif" class="iconLine" alt=""/>
+                    <img src="icon_line.svg" class="iconLine" alt=""/>
                     <a href="tables.do?jsessionid=${sessionId}" target="h2menu">
-                        <img src="icon_refresh.gif"
+                        <img src="icon_refresh.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.refresh}"
                             title="${text.toolbar.refresh}" border="1"/>
                     </a>
-                    <img src="icon_line.gif" class="iconLine" alt=""/>
+                    <img src="icon_line.svg" class="iconLine" alt=""/>
                 </td>
                 <td class="toolbar">
                     <input type="checkbox" name="autoCommit" value="autoCommit" onclick=
@@ -41,20 +41,20 @@ Initial Developer: H2 Group
                 </td>
                 <td class="toolbar">
                     <a href="query.do?jsessionid=${sessionId}&amp;sql=ROLLBACK" target="h2result">
-                        <img src="icon_rollback.gif"
+                        <img src="icon_rollback.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.rollback}"
                             title="${text.toolbar.rollback}" border="1"/>
                     </a>
                     <a href="query.do?jsessionid=${sessionId}&amp;sql=COMMIT" target="h2result">
-                        <img src="icon_commit.gif"
+                        <img src="icon_commit.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.commit}"
                             title="${text.toolbar.commit}" border="1"/>
                     </a>
-                    <img src="icon_line.gif" class="iconLine" alt=""/>
+                    <img src="icon_line.svg" class="iconLine" alt=""/>
                 </td>
                 <td class="toolbar">
                     &nbsp;${text.toolbar.maxRows}:&nbsp;
@@ -81,7 +81,7 @@ Initial Developer: H2 Group
                 </td>
                 <td class="toolbar">
                     <a href="javascript:parent.h2query.submitAll();">
-                        <img src="icon_run.gif"
+                        <img src="icon_run.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.run}"
@@ -90,7 +90,7 @@ Initial Developer: H2 Group
                 </td>
                 <td class="toolbar">
                     <a href="javascript:parent.h2query.submitSelected();">
-                        <img src="icon_run_selected.gif"
+                        <img src="icon_run_selected.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.runSelected}"
@@ -99,21 +99,21 @@ Initial Developer: H2 Group
                 </td>
                 <td class="toolbar">
                     <a href="query.do?jsessionid=${sessionId}&amp;sql=@cancel." target="h2result">
-                        <img src="icon_stop.gif"
+                        <img src="icon_stop.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.cancelStatement}"
                             title="${text.toolbar.cancelStatement}" border="1"/>
                     </a>
-                    <img src="icon_line.gif" class="iconLine" alt=""/>
+                    <img src="icon_line.svg" class="iconLine" alt=""/>
                     <a href="query.do?jsessionid=${sessionId}&amp;sql=@history." target="h2result">
-                        <img src="icon_history.gif"
+                        <img src="icon_history.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.toolbar.history}"
                             title="${text.toolbar.history}" border="1"/>
                     </a>
-                    <img src="icon_line.gif" class="iconLine" alt=""/>
+                    <img src="icon_line.svg" class="iconLine" alt=""/>
                 </td>
                 <td class="toolbar">
                     ${text.toolbar.autoComplete}&nbsp;
@@ -144,7 +144,7 @@ Initial Developer: H2 Group
                 </td>
                 <td class="toolbar">
                     <a href="help.jsp?jsessionid=${sessionId}" target="h2result">
-                        <img src="icon_help.gif"
+                        <img src="icon_help.svg"
                             onmouseover="this.className ='icon_hover'"
                             onmouseout="this.className ='icon'"
                             class="icon" alt="${text.a.help}"

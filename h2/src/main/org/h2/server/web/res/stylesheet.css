@@ -4,43 +4,68 @@
  * Initial Developer: H2 Group
  */
 
+/* Coinbase-inspired theme
+ * brand blue #0052FF, ink #0A0B0D, secondary #5B616E,
+ * surfaces #FFFFFF / #F7F8FA, borders #EAECEF, generous spacing, Inter font.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 td, input, select, textarea, body, code, pre {
-    font: 12px/1.4 Arial, sans-serif;
+    font: 14px/1.55 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    margin: 12px;
+    color: #0A0B0D;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5 {
-    font: 12px/1.4 Arial, sans-serif;
-    font-weight: bold;
+    font: 14px/1.4 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    color: #0A0B0D;
+    letter-spacing: -0.01em;
 }
 
 a {
     text-decoration: none;
-    color: #0000ff;
+    color: #0052FF;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #0043CC;
 }
 
-body {
-    margin: 4px;
+code, pre {
+    font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: 13px;
 }
 
 code {
-    background-color: #ece9d8;
-    padding: 0px 2px;
+    background-color: #F7F8FA;
+    border: 1px solid #EAECEF;
+    border-radius: 6px;
+    padding: 2px 6px;
 }
 
 h1 {
-    background-color: #0000bb;
-    padding: 2px 4px 2px 4px;
+    background-color: #0052FF;
+    padding: 14px 20px;
     color: #fff;
     font-size: 22px;
+    font-weight: 600;
     line-height: normal;
+    letter-spacing: -0.02em;
+    border-radius: 12px;
 }
 
 h2 {
     font-size: 19px;
+    letter-spacing: -0.015em;
 }
 
 h3 {
@@ -48,7 +73,7 @@ h3 {
 }
 
 li {
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 ol {
@@ -59,47 +84,94 @@ ol {
 table {
     background-color: #ffffff;
     border-collapse: collapse;
-    border: 1px solid #aca899;
+    border: 1px solid #EAECEF;
 }
 
 td {
     background-color: #ffffff;
-    padding: 2px;
+    padding: 10px 14px;
     text-align: left;
-    vertical-align:top;
-    border: 1px solid #aca899;
+    vertical-align: top;
+    border: 1px solid #EAECEF;
 }
 
 textarea {
     width: 100%;
     overflow: auto;
+    border: 1px solid #DDE1E7;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #0A0B0D;
+    background-color: #ffffff;
+}
+
+textarea:focus, input:focus, select:focus {
+    outline: none;
+    border-color: #0052FF;
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.16);
+}
+
+input, select {
+    border: 1px solid #DDE1E7;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #0A0B0D;
+    background-color: #ffffff;
 }
 
 th {
-    font-weight: normal;
+    font-weight: 600;
     text-align: left;
-    background-color: #ece9d8;
-    padding: 2px;
-    border: 1px solid #aca899;
+    background-color: #F7F8FA;
+    color: #5B616E;
+    padding: 10px 14px;
+    border: 1px solid #EAECEF;
 }
 
 ul {
     list-style-type: disc;
     list-style-position: outside;
-    padding-left: 20px;
+    padding-left: 22px;
 }
 
 .result {
-    background-color: #f4f0e0;
-    margin: 10px;
+    background-color: #F7F8FA;
+    border: 1px solid #EAECEF;
+    border-radius: 12px;
+    margin: 14px;
+    padding: 6px;
 }
 
 table.resultSet {
     white-space: pre;
 }
 
+table.resultSet tr:hover td {
+    background-color: #F0F4FF;
+}
+
 .toolbar {
-    background-color: #ece9d8;
+    background-color: #F7F8FA;
+}
+
+/* keep the top toolbar frame compact so it fits its fixed-height frame
+   and does not overflow onto the tree / result frames below */
+body.toolbar {
+    margin: 0;
+    padding: 3px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+td.toolbar select {
+    padding: 3px 8px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+td.toolbar input[type="checkbox"] {
+    padding: 0;
+    vertical-align: middle;
 }
 
 table.toolbar {
@@ -119,7 +191,7 @@ tr.toolbar {
 td.toolbar {
     vertical-align: middle;
     border: 0px;
-    padding: 0px 0px;
+    padding: 4px 4px;
 }
 
 table.nav {
@@ -135,8 +207,10 @@ td.nav {
 }
 
 table.login {
-    background-color: #ece9d8;
-    border:1px solid #aca899;
+    background-color: #ffffff;
+    border: 1px solid #EAECEF;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(10, 11, 13, 0.08);
 }
 
 tr.login {
@@ -147,39 +221,40 @@ th.login {
     color: #ffffff;
     text-align: left;
     border: 0px;
-    background-color: #ece9d8;
-    padding: 4px 10px;
-    background-image: url(background.gif);
+    background-color: #0052FF;
+    background-image: none;
+    padding: 16px 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 td.login {
-    background-color: #ece9d8;
-    padding: 5px 10px;
+    background-color: #ffffff;
+    padding: 12px 20px;
     text-align: left;
     border: 0px;
 }
 
 .iconLine {
-    border-width:0px;
-    border-style:solid;
+    border-width: 0px;
+    border-style: solid;
 }
 
 .icon {
-    border-top-color:#ece9d8;
-    border-left-color:#ece9d8;
-    border-right-color:#ece9d8;
-    border-bottom-color:#ece9d8;
-    border-width:1px;
-    border-style:solid;
+    border-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 8px;
+    padding: 3px;
 }
 
 .icon_hover {
-    border-color:#aca899;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-width:1px;
-    border-style:solid;
+    border-color: transparent;
+    background-color: #EAF0FF;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 3px;
 }
 
 table.empty {
@@ -190,50 +265,55 @@ table.empty {
 td.empty {
     background-color: #ffffff;
     border: 0px;
-    padding: 5px 10px;
+    padding: 12px 20px;
     text-align: left;
 }
 
 .error {
-    color: #771111;
+    color: #CF202F;
 }
 
 div.error {
-    background-color: #eecccc;
-    border-color: #ddbbbb;
+    color: #CF202F;
+    background-color: #FDEEEF;
+    border-color: #F6C9CD;
 }
 
 div.success {
-    color: #226622;
-    background-color: #cceecc;
-    border-color: #bbddbb;
+    color: #0A7C42;
+    background-color: #EAF8F0;
+    border-color: #BFE8D2;
 }
 
 div.error, div.success {
-    border-radius: 4px;
-    padding: 10px;
+    border-radius: 12px;
+    padding: 14px 16px;
     border-width: 1px;
     border-style: solid;
 }
 
 input.button {
-    padding: 3px;
-    background-color: #ece9d8;
-    border-color: #aca899;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    padding: 9px 18px;
+    color: #ffffff;
+    background-color: #0052FF;
+    border-color: #0052FF;
+    border-radius: 10px;
     border-width: 1px;
     border-style: solid;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: -0.005em;
 }
 
 input.button:hover {
-    border-color: #5e5c55;
+    background-color: #0043CC;
+    border-color: #0043CC;
 }
 
 input.button:active {
-    position:relative;
-    top:1px;
+    position: relative;
+    top: 1px;
+    background-color: #003AAE;
 }
 
 .tree {
@@ -242,7 +322,7 @@ input.button:active {
     white-space: nowrap;
 }
 
-.tree img  {
+.tree img {
     height: 18px;
     width: 18px;
     border: 0px;
@@ -254,11 +334,14 @@ input.button:active {
     text-decoration: none;
     vertical-align: middle;
     white-space: nowrap;
-    color: #000000;
+    color: #0A0B0D;
+    padding: 3px 6px;
+    border-radius: 6px;
 }
 
 .tree a:hover {
-    color: #345373;
+    color: #0052FF;
+    background-color: #F0F4FF;
 }
 
 table.content {
@@ -268,61 +351,66 @@ table.content {
 }
 
 tr.content {
-    border:0px;
-    border-left:1px solid #aca899;
+    border: 0px;
+    border-left: 1px solid #EAECEF;
 }
 
 td.content {
-    border:0px;
-    border-left:1px solid #aca899;
+    border: 0px;
+    border-left: 1px solid #EAECEF;
 }
 
 .contentDiv {
-    margin:10px;
+    margin: 16px;
 }
 
 tr.contentResult {
-    border:0px;
-    border-top:1px solid #aca899;
-    border-left:1px solid #aca899;
+    border: 0px;
+    border-top: 1px solid #EAECEF;
+    border-left: 1px solid #EAECEF;
 }
 
 td.contentResult {
-    border:0px;
-    border-top:1px solid #aca899;
-    border-left:1px solid #aca899;
+    border: 0px;
+    border-top: 1px solid #EAECEF;
+    border-left: 1px solid #EAECEF;
 }
 
 table.autoComp {
-    background-color: #e0ecff;
-    border: 1px solid #7f9db9;
+    background-color: #ffffff;
+    border: 1px solid #DDE1E7;
+    border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(10, 11, 13, 0.12);
     cursor: pointer;
     position: absolute;
     top: 1px;
     left: 1px;
-    z-index:0;
-    padding: 0px;
+    z-index: 0;
+    padding: 4px;
     margin: 0px;
-    border-spacing:2px;
+    border-spacing: 2px;
 }
 
 td.autoComp0 {
     border-spacing: 0px;
-    padding: 1px 8px;
-    background-color: #cce0ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: #DCE7FF;
     border: 0px;
 }
 
 td.autoComp1 {
     border-spacing: 0px;
-    padding: 1px 8px;
-    background-color: #e7f0ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: #F0F4FF;
     border: 0px;
 }
 
 td.autoComp2 {
     border-spacing: 0px;
-    padding: 1px 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
     background-color: #ffffff;
     border: 0px;
 }
@@ -335,4 +423,86 @@ td.autoCompHide {
 table.tool, table.tool tr, table.tool tr td {
     padding: 0px;
     border: 0px;
+}
+
+/* ---- single-page console layout (replaces the old <frameset>) ---- */
+.app-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: auto 190px 1fr;
+    grid-template-areas:
+        "toolbar toolbar"
+        "tree    editor"
+        "tree    result";
+    background-color: #ffffff;
+}
+
+#toolbar {
+    grid-area: toolbar;
+    background-color: #F7F8FA;
+    border-bottom: 1px solid #EAECEF;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 4px 10px;
+}
+
+#treePanel {
+    grid-area: tree;
+    overflow: auto;
+    border-right: 1px solid #EAECEF;
+    padding: 12px 10px;
+}
+
+#editorPanel {
+    grid-area: editor;
+    border-bottom: 1px solid #EAECEF;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.editorButtons {
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+
+.editorLabel {
+    color: #5B616E;
+    margin-left: 6px;
+}
+
+#editorPanel textarea#sql {
+    flex: 1 1 auto;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    font-family: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: 13px;
+}
+
+#resultRegion {
+    grid-area: result;
+    position: relative;
+    overflow: hidden;
+}
+
+#output {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    margin: 0;
+    padding: 12px 14px;
+    background-color: #ffffff;
+    border: 0px;
+    border-radius: 0px;
 }
