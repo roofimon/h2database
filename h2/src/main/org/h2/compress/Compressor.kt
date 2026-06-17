@@ -3,35 +3,37 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.compress;
-
+package org.h2.compress
 
 /**
  * Each data compression algorithm must implement this interface.
  */
-public interface Compressor {
+interface Compressor {
 
-    /**
-     * No compression is used.
-     */
-    int NO = 0;
+    companion object {
 
-    /**
-     * The LZF compression algorithm is used
-     */
-    int LZF = 1;
+        /**
+         * No compression is used.
+         */
+        const val NO = 0
 
-    /**
-     * The DEFLATE compression algorithm is used.
-     */
-    int DEFLATE = 2;
+        /**
+         * The LZF compression algorithm is used
+         */
+        const val LZF = 1
+
+        /**
+         * The DEFLATE compression algorithm is used.
+         */
+        const val DEFLATE = 2
+    }
 
     /**
      * Get the compression algorithm type.
      *
      * @return the type
      */
-    int getAlgorithm();
+    fun getAlgorithm(): Int
 
     /**
      * Compress a number of bytes.
@@ -43,7 +45,7 @@ public interface Compressor {
      * @param outPos the offset at the output array
      * @return the end position
      */
-    int compress(byte[] in, int inPos, int inLen, byte[] out, int outPos);
+    fun compress(`in`: ByteArray, inPos: Int, inLen: Int, out: ByteArray, outPos: Int): Int
 
     /**
      * Expand a number of compressed bytes.
@@ -55,8 +57,7 @@ public interface Compressor {
      * @param outPos the offset at the output array
      * @param outLen the size of the uncompressed data
      */
-    void expand(byte[] in, int inPos, int inLen, byte[] out, int outPos,
-            int outLen);
+    fun expand(`in`: ByteArray, inPos: Int, inLen: Int, out: ByteArray, outPos: Int, outLen: Int)
 
     /**
      * Set the compression options. This may include settings for
@@ -64,5 +65,5 @@ public interface Compressor {
      *
      * @param options the options
      */
-    void setOptions(String options);
+    fun setOptions(options: String?)
 }
