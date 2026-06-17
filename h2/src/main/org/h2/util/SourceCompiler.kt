@@ -304,7 +304,7 @@ class SourceCompiler {
                 )
                 val importCustomizer = Utils.newInstance(
                     "org.codehaus.groovy.control.customizers.ImportCustomizer"
-                )
+                )!!
                 // Call the method ImportCustomizer.addImports(String[])
                 val importsArray = arrayOf(
                     "java.sql.Connection",
@@ -322,7 +322,7 @@ class SourceCompiler {
                 Array.set(importCustomizerArray, 0, importCustomizer)
                 val configuration = Utils.newInstance(
                     "org.codehaus.groovy.control.CompilerConfiguration"
-                )
+                )!!
                 Utils.callMethod(
                     configuration,
                     "addCompilationCustomizers", importCustomizerArray
@@ -349,7 +349,7 @@ class SourceCompiler {
                 val codeSource = Utils.newInstance(
                     "groovy.lang.GroovyCodeSource",
                     source, "$packageAndClassName.groovy", "UTF-8"
-                )
+                )!!
                 Utils.callMethod(codeSource, "setCachable", false)
                 return Utils.callMethod(LOADER, "parseClass", codeSource) as Class<*>
             } catch (e: Exception) {
@@ -446,7 +446,7 @@ class SourceCompiler {
 
         private val JAVAC_SUN: Class<*>?
 
-        private val COMPILE_DIR = Utils.getProperty("java.io.tmpdir", ".")
+        private val COMPILE_DIR = Utils.getProperty("java.io.tmpdir", ".")!!
 
         init {
             var c: JavaCompiler?

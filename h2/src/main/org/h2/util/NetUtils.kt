@@ -411,6 +411,9 @@ class NetUtils private constructor() {
                     }
                 }
                 else -> {
+                    if (builder == null) {
+                        builder = StringBuilder()
+                    }
                     StringUtils.convertBytesToHex(builder, address)
                 }
             }

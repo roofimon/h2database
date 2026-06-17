@@ -164,7 +164,7 @@ class SortedProperties : Properties() {
         @JvmStatic
         fun fromLines(s: String): SortedProperties {
             val p = SortedProperties()
-            for (line in StringUtils.arraySplit(s, '\n', true)) {
+            for (line in StringUtils.arraySplit(s, '\n', true)!!) {
                 val idx = line.indexOf('=')
                 if (idx > 0) {
                     p[line.substring(0, idx)] = line.substring(idx + 1)
