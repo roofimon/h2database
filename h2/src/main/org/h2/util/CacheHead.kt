@@ -3,21 +3,19 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.util;
+package org.h2.util
 
 /**
  * The head element of the linked list.
  */
-public class CacheHead extends CacheObject {
+class CacheHead : CacheObject() {
 
-    @Override
-    public boolean canRemove() {
-        return false;
+    override fun canRemove(): Boolean {
+        return false
     }
 
-    @Override
-    public int getMemory() {
-        return 0;
+    override fun getMemory(): Int {
+        return 0
     }
 
 }

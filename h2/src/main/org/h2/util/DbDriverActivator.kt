@@ -30,7 +30,7 @@ class DbDriverActivator : BundleActivator {
             return
         }
         // but don't ignore exceptions in this call
-        OsgiDataSourceFactory.registerService(bundleContext, driver)
+        OsgiDataSourceFactory.registerService(bundleContext!!, driver)
     }
 
     /**

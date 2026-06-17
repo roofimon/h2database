@@ -3,26 +3,26 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.util;
+package org.h2.util
 
-import java.util.ArrayList;
+import java.util.ArrayList
 
 /**
  * The cache keeps frequently used objects in the main memory.
  */
-public interface Cache {
+interface Cache {
 
     /**
      * Get all objects in the cache that have been changed.
      *
      * @return the list of objects
      */
-    ArrayList<CacheObject> getAllChanged();
+    fun getAllChanged(): ArrayList<CacheObject>
 
     /**
      * Clear the cache.
      */
-    void clear();
+    fun clear()
 
     /**
      * Get an element in the cache if it is available.
@@ -31,7 +31,7 @@ public interface Cache {
      * @param pos the unique key of the element
      * @return the element or null
      */
-    CacheObject get(int pos);
+    fun get(pos: Int): CacheObject?
 
     /**
      * Add an element to the cache. Other items may fall out of the cache
@@ -39,7 +39,7 @@ public interface Cache {
      *
      * @param r the object
      */
-    void put(CacheObject r);
+    fun put(r: CacheObject)
 
     /**
      * Update an element in the cache.
@@ -49,7 +49,7 @@ public interface Cache {
      * @param record the element
      * @return the element
      */
-    CacheObject update(int pos, CacheObject record);
+    fun update(pos: Int, record: CacheObject): CacheObject?
 
     /**
      * Remove an object from the cache.
@@ -57,7 +57,7 @@ public interface Cache {
      * @param pos the unique key of the element
      * @return true if the key was in the cache
      */
-    boolean remove(int pos);
+    fun remove(pos: Int): Boolean
 
     /**
      * Get an element from the cache if it is available.
@@ -66,27 +66,27 @@ public interface Cache {
      * @param pos the unique key of the element
      * @return the element or null
      */
-    CacheObject find(int pos);
+    fun find(pos: Int): CacheObject?
 
     /**
      * Set the maximum memory to be used by this cache.
      *
      * @param size the maximum size in KB
      */
-    void setMaxMemory(int size);
+    fun setMaxMemory(size: Int)
 
     /**
      * Get the maximum memory to be used.
      *
      * @return the maximum size in KB
      */
-    int getMaxMemory();
+    fun getMaxMemory(): Int
 
     /**
      * Get the used size in KB.
      *
      * @return the current size in KB
      */
-    int getMemory();
+    fun getMemory(): Int
 
 }

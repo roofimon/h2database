@@ -3,34 +3,37 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.util;
+package org.h2.util
 
-import org.h2.message.DbException;
+import org.h2.message.DbException
 
 /**
  * The base object for all cached objects.
  */
-public abstract class CacheObject implements Comparable<CacheObject> {
+abstract class CacheObject : Comparable<CacheObject> {
 
     /**
      * The previous element in the LRU linked list. If the previous element is
      * the head, then this element is the most recently used object.
      */
-    public CacheObject cachePrevious;
+    @JvmField
+    var cachePrevious: CacheObject? = null
 
     /**
      * The next element in the LRU linked list. If the next element is the head,
      * then this element is the least recently used object.
      */
-    public CacheObject cacheNext;
+    @JvmField
+    var cacheNext: CacheObject? = null
 
     /**
      * The next element in the hash chain.
      */
-    public CacheObject cacheChained;
+    @JvmField
+    var cacheChained: CacheObject? = null
 
-    private int pos;
-    private boolean changed;
+    private var pos = 0
+    private var changed = false
 
     /**
      * Check if the object can be removed from the cache.
@@ -38,24 +41,24 @@ public abstract class CacheObject implements Comparable<CacheObject> {
      *
      * @return true if it can be removed
      */
-    public abstract boolean canRemove();
+    abstract fun canRemove(): Boolean
 
     /**
      * Get the estimated used memory.
      *
      * @return number of words (one word is 4 bytes)
      */
-    public abstract int getMemory();
+    abstract fun getMemory(): Int
 
-    public void setPos(int pos) {
+    open fun setPos(pos: Int) {
         if (cachePrevious != null || cacheNext != null || cacheChained != null) {
-            throw DbException.getInternalError("setPos too late");
+            throw DbException.getInternalError("setPos too late")
         }
-        this.pos = pos;
+        this.pos = pos
     }
 
-    public int getPos() {
-        return pos;
+    open fun getPos(): Int {
+        return pos
     }
 
     /**
@@ -64,21 +67,20 @@ public abstract class CacheObject implements Comparable<CacheObject> {
      *
      * @return if it has been changed
      */
-    public boolean isChanged() {
-        return changed;
+    open fun isChanged(): Boolean {
+        return changed
     }
 
-    public void setChanged(boolean b) {
-        changed = b;
+    open fun setChanged(b: Boolean) {
+        changed = b
     }
 
-    @Override
-    public int compareTo(CacheObject other) {
-        return Integer.compare(getPos(), other.getPos());
+    override fun compareTo(other: CacheObject): Int {
+        return Integer.compare(getPos(), other.getPos())
     }
 
-    public boolean isStream() {
-        return false;
+    open fun isStream(): Boolean {
+        return false
     }
 
 }
