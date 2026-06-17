@@ -3,10 +3,10 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.util;
+package org.h2.util
 
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Similar to ThreadLocal, except that it allows its data to be read from other
@@ -14,23 +14,23 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @param <T> the type
  */
-public class DebuggingThreadLocal<T> {
+class DebuggingThreadLocal<T> {
 
-    private final ConcurrentHashMap<Long, T> map = new ConcurrentHashMap<>();
+    private val map = ConcurrentHashMap<Long, T>()
 
-    public void set(T value) {
-        map.put(Thread.currentThread().getId(), value);
+    fun set(value: T) {
+        map[Thread.currentThread().id] = value
     }
 
     /**
      * Remove the value for the current thread.
      */
-    public void remove() {
-        map.remove(Thread.currentThread().getId());
+    fun remove() {
+        map.remove(Thread.currentThread().id)
     }
 
-    public T get() {
-        return map.get(Thread.currentThread().getId());
+    fun get(): T? {
+        return map[Thread.currentThread().id]
     }
 
     /**
@@ -38,8 +38,8 @@ public class DebuggingThreadLocal<T> {
      *
      * @return a HashMap containing a mapping from thread-id to value
      */
-    public HashMap<Long, T> getSnapshotOfAllThreads() {
-        return new HashMap<>(map);
+    fun getSnapshotOfAllThreads(): HashMap<Long, T> {
+        return HashMap(map)
     }
 
 }

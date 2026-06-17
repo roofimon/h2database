@@ -18,9 +18,9 @@
  * diligence.
  * -Alan
  */
-package org.h2.util;
+package org.h2.util
 
-import org.h2.message.DbException;
+import org.h2.message.DbException
 
 /**
  * A class to iterate over all permutations of an array.
@@ -29,55 +29,28 @@ import org.h2.message.DbException;
  *
  * @param <T> the element type
  */
-public class Permutations<T> {
+class Permutations<T> private constructor(
+    private val `in`: Array<T>,
+    private val out: Array<T>,
+    private val m: Int,
+) {
 
-    private final T[] in;
-    private final T[] out;
-    private final int n, m;
-    private final int[] index;
-    private boolean hasNext = true;
+    private val n: Int = `in`.size
+    private val index: kotlin.IntArray
+    private var hasNext = true
 
-    private Permutations(T[] in, T[] out, int m) {
-        this.n = in.length;
-        this.m = m;
+    init {
         if (n < m || m < 0) {
-            throw DbException.getInternalError("n < m or m < 0");
+            throw DbException.getInternalError("n < m or m < 0")
         }
-        this.in = in;
-        this.out = out;
-        index = new int[n];
-        for (int i = 0; i < n; i++) {
-            index[i] = i;
+        index = kotlin.IntArray(n)
+        for (i in 0 until n) {
+            index[i] = i
         }
 
         // The elements from m to n are always kept ascending right to left.
         // This keeps the dip in the interesting region.
-        reverseAfter(m - 1);
-    }
-
-    /**
-     * Create a new permutations object.
-     *
-     * @param <T> the type
-     * @param in the source array
-     * @param out the target array
-     * @return the generated permutations object
-     */
-    public static <T> Permutations<T> create(T[] in, T[] out) {
-        return new Permutations<>(in, out, in.length);
-    }
-
-    /**
-     * Create a new permutations object.
-     *
-     * @param <T> the type
-     * @param in the source array
-     * @param out the target array
-     * @param m the number of output elements to generate
-     * @return the generated permutations object
-     */
-    public static <T> Permutations<T> create(T[] in, T[] out, int m) {
-        return new Permutations<>(in, out, m);
+        reverseAfter(m - 1)
     }
 
     /**
@@ -92,33 +65,33 @@ public class Permutations<T> {
      * These elements are swapped, yielding {1, 3, 4, 2, 0}, and the list right
      * of the dip point is reversed, yielding {1, 3, 0, 2, 4}.
      */
-    private void moveIndex() {
+    private fun moveIndex() {
         // find the index of the first element that dips
-        int i = rightmostDip();
+        val i = rightmostDip()
         if (i < 0) {
-            hasNext = false;
-            return;
+            hasNext = false
+            return
         }
 
         // find the least great element to the right of the dip
-        int leastToRightIndex = i + 1;
-        for (int j = i + 2; j < n; j++) {
+        var leastToRightIndex = i + 1
+        for (j in i + 2 until n) {
             if (index[j] < index[leastToRightIndex] && index[j] > index[i]) {
-                leastToRightIndex = j;
+                leastToRightIndex = j
             }
         }
 
         // switch dip element with the least great element to its right
-        int t = index[i];
-        index[i] = index[leastToRightIndex];
-        index[leastToRightIndex] = t;
+        val t = index[i]
+        index[i] = index[leastToRightIndex]
+        index[leastToRightIndex] = t
 
         if (m - 1 > i) {
             // reverse the elements to the right of the dip
-            reverseAfter(i);
+            reverseAfter(i)
 
             // reverse the elements to the right of m - 1
-            reverseAfter(m - 1);
+            reverseAfter(m - 1)
         }
     }
 
@@ -128,13 +101,13 @@ public class Permutations<T> {
      *
      * @return the index or -1 if non is found
      */
-    private int rightmostDip() {
-        for (int i = n - 2; i >= 0; i--) {
+    private fun rightmostDip(): Int {
+        for (i in n - 2 downTo 0) {
             if (index[i] < index[i + 1]) {
-                return i;
+                return i
             }
         }
-        return -1;
+        return -1
     }
 
     /**
@@ -142,15 +115,15 @@ public class Permutations<T> {
      *
      * @param i the index
      */
-    private void reverseAfter(int i) {
-        int start = i + 1;
-        int end = n - 1;
+    private fun reverseAfter(i: Int) {
+        var start = i + 1
+        var end = n - 1
         while (start < end) {
-            int t = index[start];
-            index[start] = index[end];
-            index[end] = t;
-            start++;
-            end--;
+            val t = index[start]
+            index[start] = index[end]
+            index[end] = t
+            start++
+            end--
         }
     }
 
@@ -159,15 +132,43 @@ public class Permutations<T> {
      *
      * @return if a new lineup is available
      */
-    public boolean next() {
+    fun next(): Boolean {
         if (!hasNext) {
-            return false;
+            return false
         }
-        for (int i = 0; i < m; i++) {
-            out[i] = in[index[i]];
+        for (i in 0 until m) {
+            out[i] = `in`[index[i]]
         }
-        moveIndex();
-        return true;
+        moveIndex()
+        return true
     }
 
+    companion object {
+        /**
+         * Create a new permutations object.
+         *
+         * @param <T> the type
+         * @param in the source array
+         * @param out the target array
+         * @return the generated permutations object
+         */
+        @JvmStatic
+        fun <T> create(`in`: Array<T>, out: Array<T>): Permutations<T> {
+            return Permutations(`in`, out, `in`.size)
+        }
+
+        /**
+         * Create a new permutations object.
+         *
+         * @param <T> the type
+         * @param in the source array
+         * @param out the target array
+         * @param m the number of output elements to generate
+         * @return the generated permutations object
+         */
+        @JvmStatic
+        fun <T> create(`in`: Array<T>, out: Array<T>, m: Int): Permutations<T> {
+            return Permutations(`in`, out, m)
+        }
+    }
 }

@@ -258,6 +258,11 @@
         <version>${kotlin.version}</version>
         <configuration>
           <jvmTarget>${maven.compiler.release}</jvmTarget>
+          <!-- Compile Kotlin interface methods with bodies to real JVM default
+               methods so Java implementors/callers inherit and can call them. -->
+          <args>
+            <arg>-Xjvm-default=all</arg>
+          </args>
         </configuration>
         <executions>
           <execution>

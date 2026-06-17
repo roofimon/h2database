@@ -3,29 +3,20 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.util;
+package org.h2.util
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.Arrays
+import java.util.NoSuchElementException
 
 /**
  * The stack of byte values. This class is not synchronized and should not be
  * used by multiple threads concurrently.
  */
-public final class ByteStack {
+class ByteStack {
 
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    private var size = 0
 
-    private int size;
-
-    private byte[] array;
-
-    /**
-     * Creates a new empty instance.
-     */
-    public ByteStack() {
-        array = Utils.EMPTY_BYTES;
-    }
+    private var array: ByteArray = Utils.EMPTY_BYTES
 
     /**
      * Pushes an item onto the top of this stack.
@@ -33,14 +24,14 @@ public final class ByteStack {
      * @param item
      *            the item to push
      */
-    public void push(byte item) {
-        int index = size;
-        int oldLength = array.length;
+    fun push(item: Byte) {
+        val index = size
+        val oldLength = array.size
         if (index >= oldLength) {
-            grow(oldLength);
+            grow(oldLength)
         }
-        array[index] = item;
-        size = index + 1;
+        array[index] = item
+        size = index + 1
     }
 
     /**
@@ -50,13 +41,13 @@ public final class ByteStack {
      * @throws NoSuchElementException
      *             if stack is empty
      */
-    public byte pop() {
-        int index = size - 1;
+    fun pop(): Byte {
+        val index = size - 1
         if (index < 0) {
-            throw new NoSuchElementException();
+            throw NoSuchElementException()
         }
-        size = index;
-        return array[index];
+        size = index
+        return array[index]
     }
 
     /**
@@ -66,13 +57,13 @@ public final class ByteStack {
      *            value to return if stack is empty
      * @return the item at the top of this stack, or default value
      */
-    public int poll(int defaultValue) {
-        int index = size - 1;
+    fun poll(defaultValue: Int): Int {
+        val index = size - 1
         if (index < 0) {
-            return defaultValue;
+            return defaultValue
         }
-        size = index;
-        return array[index];
+        size = index
+        return array[index].toInt()
     }
 
     /**
@@ -82,21 +73,21 @@ public final class ByteStack {
      *            value to return if stack is empty
      * @return the item at the top of this stack, or default value
      */
-    public int peek(int defaultValue) {
-        int index = size - 1;
+    fun peek(defaultValue: Int): Int {
+        val index = size - 1
         if (index < 0) {
-            return defaultValue;
+            return defaultValue
         }
-        return array[index];
+        return array[index].toInt()
     }
 
     /**
-     * Returns {@code true} if this stack is empty.
+     * Returns `true` if this stack is empty.
      *
-     * @return {@code true} if this stack is empty
+     * @return `true` if this stack is empty
      */
-    public boolean isEmpty() {
-        return size == 0;
+    fun isEmpty(): Boolean {
+        return size == 0
     }
 
     /**
@@ -104,19 +95,23 @@ public final class ByteStack {
      *
      * @return the number of items in this stack
      */
-    public int size() {
-        return size;
+    fun size(): Int {
+        return size
     }
 
-    private void grow(int length) {
+    private fun grow(length: Int) {
+        var length = length
         if (length == 0) {
-            length = 0x10;
+            length = 0x10
         } else if (length >= MAX_ARRAY_SIZE) {
-            throw new OutOfMemoryError();
-        } else if ((length <<= 1) < 0) {
-            length = MAX_ARRAY_SIZE;
+            throw OutOfMemoryError()
+        } else if ((length shl 1).also { length = it } < 0) {
+            length = MAX_ARRAY_SIZE
         }
-        array = Arrays.copyOf(array, length);
+        array = Arrays.copyOf(array, length)
     }
 
+    companion object {
+        private const val MAX_ARRAY_SIZE = Int.MAX_VALUE - 8
+    }
 }
