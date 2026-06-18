@@ -3,9 +3,9 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.store;
+package org.h2.store
 
-public enum FileLockMethod {
+enum class FileLockMethod {
     /**
      * This locking method means no locking is used at all.
      */

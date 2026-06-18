@@ -3,25 +3,25 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.store;
+package org.h2.store
 
-import org.h2.message.DbException;
-import org.h2.util.SmallLRUCache;
-import org.h2.util.TempFileDeleter;
-import org.h2.value.CompareMode;
+import org.h2.message.DbException
+import org.h2.util.SmallLRUCache
+import org.h2.util.TempFileDeleter
+import org.h2.value.CompareMode
 
 /**
  * A data handler contains a number of callback methods, mostly related to CLOB
  * and BLOB handling. The most important implementing class is a database.
  */
-public interface DataHandler {
+interface DataHandler {
 
     /**
      * Get the database path.
      *
      * @return the database path
      */
-    String getDatabasePath();
+    val databasePath: String?
 
     /**
      * Open a file at the given location.
@@ -31,7 +31,7 @@ public interface DataHandler {
      * @param mustExist whether the file must already exist
      * @return the file
      */
-    FileStore openFile(String name, String mode, boolean mustExist);
+    fun openFile(name: String?, mode: String?, mustExist: Boolean): FileStore?
 
     /**
      * Check if the simulated power failure occurred.
@@ -39,49 +39,51 @@ public interface DataHandler {
      *
      * @throws DbException if the simulated power failure occurred
      */
-    void checkPowerOff() throws DbException;
+    @Throws(DbException::class)
+    fun checkPowerOff()
 
     /**
      * Check if writing is allowed.
      *
      * @throws DbException if it is not allowed
      */
-    void checkWritingAllowed() throws DbException;
+    @Throws(DbException::class)
+    fun checkWritingAllowed()
 
     /**
      * Get the maximum length of in-place large object
      *
      * @return the maximum size
      */
-    int getMaxLengthInplaceLob();
+    val maxLengthInplaceLob: Int
 
     /**
      * Get the temp file deleter mechanism.
      *
      * @return the temp file deleter
      */
-    TempFileDeleter getTempFileDeleter();
+    val tempFileDeleter: TempFileDeleter?
 
     /**
      * Get the synchronization object for lob operations.
      *
      * @return the synchronization object
      */
-    Object getLobSyncObject();
+    val lobSyncObject: Any?
 
     /**
      * Get the lob file list cache if it is used.
      *
      * @return the cache or null
      */
-    SmallLRUCache<String, String[]> getLobFileListCache();
+    val lobFileListCache: SmallLRUCache<String, Array<String>>?
 
     /**
      * Get the lob storage mechanism to use.
      *
      * @return the lob storage mechanism
      */
-    LobStorageInterface getLobStorage();
+    val lobStorage: LobStorageInterface?
 
     /**
      * Read from a lob.
@@ -94,12 +96,12 @@ public interface DataHandler {
      * @param length the number of bytes to read
      * @return the number of bytes read
      */
-    int readLob(long lobId, byte[] hmac, long offset, byte[] buff, int off, int length);
+    fun readLob(lobId: Long, hmac: ByteArray?, offset: Long, buff: ByteArray?, off: Int, length: Int): Int
 
     /**
      * Return compare mode.
      *
      * @return Compare mode.
      */
-    CompareMode getCompareMode();
+    val compareMode: CompareMode?
 }

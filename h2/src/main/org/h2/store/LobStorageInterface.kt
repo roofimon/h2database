@@ -3,20 +3,19 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.store;
+package org.h2.store
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-
-import org.h2.value.ValueBlob;
-import org.h2.value.ValueClob;
-import org.h2.value.ValueLob;
+import java.io.IOException
+import java.io.InputStream
+import java.io.Reader
+import org.h2.value.ValueBlob
+import org.h2.value.ValueClob
+import org.h2.value.ValueLob
 
 /**
  * A mechanism to store and retrieve lob data.
  */
-public interface LobStorageInterface {
+interface LobStorageInterface {
 
     /**
      * Create a CLOB object.
@@ -25,7 +24,7 @@ public interface LobStorageInterface {
      * @param maxLength the maximum length (-1 if not known)
      * @return the LOB
      */
-    ValueClob createClob(Reader reader, long maxLength);
+    fun createClob(reader: Reader?, maxLength: Long): ValueClob?
 
     /**
      * Create a BLOB object.
@@ -34,7 +33,7 @@ public interface LobStorageInterface {
      * @param maxLength the maximum length (-1 if not known)
      * @return the LOB
      */
-    ValueBlob createBlob(InputStream in, long maxLength);
+    fun createBlob(`in`: InputStream?, maxLength: Long): ValueBlob?
 
     /**
      * Copy a lob.
@@ -43,7 +42,7 @@ public interface LobStorageInterface {
      * @param tableId the new table id
      * @return the new lob
      */
-    ValueLob copyLob(ValueLob old, int tableId);
+    fun copyLob(old: ValueLob?, tableId: Int): ValueLob?
 
     /**
      * Get the input stream for the given lob, only called on server side of a TCP connection.
@@ -53,7 +52,8 @@ public interface LobStorageInterface {
      * @return the stream
      * @throws IOException on failure
      */
-    InputStream getInputStream(long lobId, long byteCount) throws IOException;
+    @Throws(IOException::class)
+    fun getInputStream(lobId: Long, byteCount: Long): InputStream?
 
     /**
      * Get the input stream for the given lob
@@ -64,31 +64,32 @@ public interface LobStorageInterface {
      * @return the stream
      * @throws IOException on failure
      */
-    InputStream getInputStream(long lobId, int tableId, long byteCount) throws IOException;
+    @Throws(IOException::class)
+    fun getInputStream(lobId: Long, tableId: Int, byteCount: Long): InputStream?
 
     /**
      * Delete a LOB (from the database, if it is stored there).
      *
      * @param lob the lob
      */
-    void removeLob(ValueLob lob);
+    fun removeLob(lob: ValueLob?)
 
     /**
      * Remove all LOBs for this table.
      *
      * @param tableId the table id
      */
-    void removeAllForTable(int tableId);
+    fun removeAllForTable(tableId: Int)
 
     /**
      * Whether the storage is read-only
      *
      * @return true if yes
      */
-    boolean isReadOnly();
+    fun isReadOnly(): Boolean
 
     /**
      * Close LobStorage and release all resources
      */
-    default void close() {}
+    fun close() {}
 }
