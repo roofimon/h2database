@@ -28,7 +28,7 @@ internal interface TraceWriter {
      * @param s the message
      * @param t the exception (may be null)
      */
-    fun write(level: Int, module: String, s: String, t: Throwable?)
+    fun write(level: Int, module: String, s: String?, t: Throwable?)
 
     /**
      * Write a message.
@@ -38,7 +38,7 @@ internal interface TraceWriter {
      * @param s the message
      * @param t the exception (may be null)
      */
-    fun write(level: Int, moduleId: Int, s: String, t: Throwable?)
+    fun write(level: Int, moduleId: Int, s: String?, t: Throwable?)
 
     /**
      * Check the given trace / log level is enabled.

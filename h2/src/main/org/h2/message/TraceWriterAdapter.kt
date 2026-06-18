@@ -39,11 +39,11 @@ class TraceWriterAdapter : TraceWriter {
         }
     }
 
-    override fun write(level: Int, moduleId: Int, s: String, t: Throwable?) {
+    override fun write(level: Int, moduleId: Int, s: String?, t: Throwable?) {
         write(level, Trace.MODULE_NAMES[moduleId], s, t)
     }
 
-    override fun write(level: Int, module: String, s: String, t: Throwable?) {
+    override fun write(level: Int, module: String, s: String?, t: Throwable?) {
         if (isEnabled(level)) {
             var message = s
             message = if (name != null) {
