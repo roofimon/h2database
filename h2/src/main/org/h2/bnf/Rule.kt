@@ -3,21 +3,21 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.bnf;
+package org.h2.bnf
 
-import java.util.HashMap;
+import java.util.HashMap
 
 /**
  * Represents a BNF rule.
  */
-public interface Rule {
+interface Rule {
 
     /**
      * Update cross references.
      *
      * @param ruleMap the reference map
      */
-    void setLinks(HashMap<String, RuleHead> ruleMap);
+    fun setLinks(ruleMap: HashMap<String, RuleHead>)
 
     /**
      * Add the next possible token(s). If there was a match, the query in the
@@ -26,13 +26,13 @@ public interface Rule {
      * @param sentence the sentence context
      * @return true if a full match
      */
-    boolean autoComplete(Sentence sentence);
+    fun autoComplete(sentence: Sentence): Boolean
 
     /**
      * Call the visit method in the given visitor.
      *
      * @param visitor the visitor
      */
-    void accept(BnfVisitor visitor);
+    fun accept(visitor: BnfVisitor)
 
 }

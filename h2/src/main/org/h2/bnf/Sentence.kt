@@ -3,68 +3,46 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.bnf;
+package org.h2.bnf
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Objects;
-
-import org.h2.bnf.context.DbSchema;
-import org.h2.bnf.context.DbTableOrView;
-import org.h2.util.StringUtils;
+import java.util.Objects
+import org.h2.bnf.context.DbSchema
+import org.h2.bnf.context.DbTableOrView
+import org.h2.util.StringUtils.Companion.toUpperEnglish
 
 /**
  * A query context object. It contains the list of table and alias objects.
  * Used for autocomplete.
  */
-public class Sentence {
-
-    /**
-     * This token type means the possible choices of the item depend on the
-     * context. For example the item represents a table name of the current
-     * database.
-     */
-    public static final int CONTEXT = 0;
-
-    /**
-     * The token type for a keyword.
-     */
-    public static final int KEYWORD = 1;
-
-    /**
-     * The token type for a function name.
-     */
-    public static final int FUNCTION = 2;
-
-    private static final int MAX_PROCESSING_TIME = 100;
+class Sentence {
 
     /**
      * The map of next tokens in the form type#tokenName token.
      */
-    private final HashMap<String, String> next = new HashMap<>();
+    private val next = HashMap<String, String>()
 
     /**
      * The complete query string.
      */
-    private String query;
+    private var query: String? = null
 
     /**
      * The uppercase version of the query string.
      */
-    private String queryUpper;
+    private var queryUpper: String? = null
 
-    private long stopAtNs;
-    private DbSchema lastMatchedSchema;
-    private DbTableOrView lastMatchedTable;
-    private DbTableOrView lastTable;
-    private HashSet<DbTableOrView> tables;
-    private HashMap<String, DbTableOrView> aliases;
+    private var stopAtNs: Long = 0
+    private var lastMatchedSchema: DbSchema? = null
+    private var lastMatchedTable: DbTableOrView? = null
+    private var lastTable: DbTableOrView? = null
+    private var tables: HashSet<DbTableOrView>? = null
+    private var aliases: HashMap<String, DbTableOrView>? = null
 
     /**
      * Start the timer to make sure processing doesn't take too long.
      */
-    public void start() {
-        stopAtNs = System.nanoTime() + MAX_PROCESSING_TIME * 1_000_000L;
+    fun start() {
+        stopAtNs = System.nanoTime() + MAX_PROCESSING_TIME * 1_000_000L
     }
 
     /**
@@ -72,9 +50,9 @@ public class Sentence {
      * Processing auto-complete shouldn't take more than a few milliseconds.
      * If processing is stopped, this methods throws an IllegalStateException
      */
-    public void stopIfRequired() {
+    fun stopIfRequired() {
         if (System.nanoTime() - stopAtNs > 0L) {
-            throw new IllegalStateException();
+            throw IllegalStateException()
         }
     }
 
@@ -85,8 +63,8 @@ public class Sentence {
      * @param string an example text
      * @param type the token type
      */
-    public void add(String n, String string, int type) {
-        next.put(type+"#"+n, string);
+    fun add(n: String, string: String, type: Int) {
+        next["$type#$n"] = string
     }
 
     /**
@@ -95,11 +73,11 @@ public class Sentence {
      * @param alias the alias name
      * @param table the alias table
      */
-    public void addAlias(String alias, DbTableOrView table) {
+    fun addAlias(alias: String, table: DbTableOrView) {
         if (aliases == null) {
-            aliases = new HashMap<>();
+            aliases = HashMap()
         }
-        aliases.put(alias, table);
+        aliases!![alias] = table
     }
 
     /**
@@ -107,12 +85,12 @@ public class Sentence {
      *
      * @param table the table
      */
-    public void addTable(DbTableOrView table) {
-        lastTable = table;
+    fun addTable(table: DbTableOrView) {
+        lastTable = table
         if (tables == null) {
-            tables = new HashSet<>();
+            tables = HashSet()
         }
-        tables.add(table);
+        tables!!.add(table)
     }
 
     /**
@@ -120,8 +98,8 @@ public class Sentence {
      *
      * @return the set of tables
      */
-    public HashSet<DbTableOrView> getTables() {
-        return tables;
+    fun getTables(): HashSet<DbTableOrView>? {
+        return tables
     }
 
     /**
@@ -129,8 +107,8 @@ public class Sentence {
      *
      * @return the alias map
      */
-    public HashMap<String, DbTableOrView> getAliases() {
-        return aliases;
+    fun getAliases(): HashMap<String, DbTableOrView>? {
+        return aliases
     }
 
     /**
@@ -138,8 +116,8 @@ public class Sentence {
      *
      * @return the last table
      */
-    public DbTableOrView getLastTable() {
-        return lastTable;
+    fun getLastTable(): DbTableOrView? {
+        return lastTable
     }
 
     /**
@@ -147,8 +125,8 @@ public class Sentence {
      *
      * @return the last schema or null
      */
-    public DbSchema getLastMatchedSchema() {
-        return lastMatchedSchema;
+    fun getLastMatchedSchema(): DbSchema? {
+        return lastMatchedSchema
     }
 
     /**
@@ -157,8 +135,8 @@ public class Sentence {
      *
      * @param schema the last matched schema or null
      */
-    public void setLastMatchedSchema(DbSchema schema) {
-        this.lastMatchedSchema = schema;
+    fun setLastMatchedSchema(schema: DbSchema?) {
+        this.lastMatchedSchema = schema
     }
 
     /**
@@ -166,8 +144,8 @@ public class Sentence {
      *
      * @param table the last matched table or null
      */
-    public void setLastMatchedTable(DbTableOrView table) {
-        this.lastMatchedTable = table;
+    fun setLastMatchedTable(table: DbTableOrView?) {
+        this.lastMatchedTable = table
     }
 
     /**
@@ -175,8 +153,8 @@ public class Sentence {
      *
      * @return the last table or null
      */
-    public DbTableOrView getLastMatchedTable() {
-        return lastMatchedTable;
+    fun getLastMatchedTable(): DbTableOrView? {
+        return lastMatchedTable
     }
 
     /**
@@ -184,10 +162,10 @@ public class Sentence {
      *
      * @param query the query string
      */
-    public void setQuery(String query) {
+    fun setQuery(query: String?) {
         if (!Objects.equals(this.query, query)) {
-            this.query = query;
-            this.queryUpper = StringUtils.toUpperEnglish(query);
+            this.query = query
+            this.queryUpper = toUpperEnglish(query!!)
         }
     }
 
@@ -196,8 +174,8 @@ public class Sentence {
      *
      * @return the query
      */
-    public String getQuery() {
-        return query;
+    fun getQuery(): String? {
+        return query
     }
 
     /**
@@ -205,8 +183,8 @@ public class Sentence {
      *
      * @return the uppercase query
      */
-    public String getQueryUpper() {
-        return queryUpper;
+    fun getQueryUpper(): String? {
+        return queryUpper
     }
 
     /**
@@ -214,8 +192,28 @@ public class Sentence {
      *
      * @return the next token map
      */
-    public HashMap<String, String> getNext() {
-        return next;
+    fun getNext(): HashMap<String, String> {
+        return next
     }
 
+    companion object {
+        /**
+         * This token type means the possible choices of the item depend on the
+         * context. For example the item represents a table name of the current
+         * database.
+         */
+        const val CONTEXT = 0
+
+        /**
+         * The token type for a keyword.
+         */
+        const val KEYWORD = 1
+
+        /**
+         * The token type for a function name.
+         */
+        const val FUNCTION = 2
+
+        private const val MAX_PROCESSING_TIME = 100
+    }
 }
