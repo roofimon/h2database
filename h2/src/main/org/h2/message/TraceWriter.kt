@@ -3,7 +3,7 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.message;
+package org.h2.message
 
 /**
  * The backend of the trace system must implement this interface. Two
@@ -11,14 +11,14 @@ package org.h2.message;
  * implementation that can write to a file and to system out, and an adapter
  * that uses SLF4J (Simple Logging Facade for Java).
  */
-interface TraceWriter {
+internal interface TraceWriter {
 
     /**
      * Set the name of the database or trace object.
      *
      * @param name the new name
      */
-    void setName(String name);
+    fun setName(name: String)
 
     /**
      * Write a message.
@@ -28,7 +28,7 @@ interface TraceWriter {
      * @param s the message
      * @param t the exception (may be null)
      */
-    void write(int level, String module, String s, Throwable t);
+    fun write(level: Int, module: String, s: String, t: Throwable?)
 
     /**
      * Write a message.
@@ -38,8 +38,7 @@ interface TraceWriter {
      * @param s the message
      * @param t the exception (may be null)
      */
-    void write(int level, int moduleId, String s, Throwable t);
-
+    fun write(level: Int, moduleId: Int, s: String, t: Throwable?)
 
     /**
      * Check the given trace / log level is enabled.
@@ -47,6 +46,5 @@ interface TraceWriter {
      * @param level the level
      * @return true if the level is enabled
      */
-    boolean isEnabled(int level);
-
+    fun isEnabled(level: Int): Boolean
 }
