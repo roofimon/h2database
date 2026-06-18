@@ -52,7 +52,7 @@ class LobStorageFrontend(private val sessionRemote: SessionRemote?) : LobStorage
         // need to use a temp file, because the input stream could come from
         // the same database, which would create a weird situation (trying
         // to read a block while writing something)
-        return ValueBlob.createTempBlob(`in`, maxLength, sessionRemote)
+        return ValueBlob.createTempBlob(`in`!!, maxLength, sessionRemote!!)
     }
 
     /**
@@ -66,7 +66,7 @@ class LobStorageFrontend(private val sessionRemote: SessionRemote?) : LobStorage
         // need to use a temp file, because the input stream could come from
         // the same database, which would create a weird situation (trying
         // to read a block while writing something)
-        return ValueClob.createTempClob(reader, maxLength, sessionRemote)
+        return ValueClob.createTempClob(reader!!, maxLength, sessionRemote!!)
     }
 
     companion object {

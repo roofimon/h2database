@@ -411,7 +411,7 @@ class DateTimeTemplate private constructor(
                 if (containsTime || containsTimeZone) {
                     throw DbException.get(ErrorCode.PARSE_ERROR_1, "time or time zone fields with DATE")
                 }
-                dateValue = (value as ValueDate).getDateValue()
+                dateValue = (value as ValueDate).dateValue
                 nanoOfDay = 0L
                 offsetSeconds = 0
             }
@@ -420,7 +420,7 @@ class DateTimeTemplate private constructor(
                     throw DbException.get(ErrorCode.PARSE_ERROR_1, "date or time zone fields with TIME")
                 }
                 dateValue = 0L
-                nanoOfDay = (value as ValueTime).getNanos()
+                nanoOfDay = (value as ValueTime).nanos
                 offsetSeconds = 0
             }
             Value.TIME_TZ -> {
@@ -429,23 +429,23 @@ class DateTimeTemplate private constructor(
                 }
                 val vt = value as ValueTimeTimeZone
                 dateValue = 0L
-                nanoOfDay = vt.getNanos()
-                offsetSeconds = vt.getTimeZoneOffsetSeconds()
+                nanoOfDay = vt.nanos
+                offsetSeconds = vt.timeZoneOffsetSeconds
             }
             Value.TIMESTAMP -> {
                 if (containsTimeZone) {
                     throw DbException.get(ErrorCode.PARSE_ERROR_1, "time zone fields with TIMESTAMP")
                 }
                 val vt = value as ValueTimestamp
-                dateValue = vt.getDateValue()
-                nanoOfDay = vt.getTimeNanos()
+                dateValue = vt.dateValue
+                nanoOfDay = vt.timeNanos
                 offsetSeconds = 0
             }
             Value.TIMESTAMP_TZ -> {
                 val vt = value as ValueTimestampTimeZone
-                dateValue = vt.getDateValue()
-                nanoOfDay = vt.getTimeNanos()
-                offsetSeconds = vt.getTimeZoneOffsetSeconds()
+                dateValue = vt.dateValue
+                nanoOfDay = vt.timeNanos
+                offsetSeconds = vt.timeZoneOffsetSeconds
             }
             else ->
                 throw DbException.getUnsupportedException(value.getType().getTraceSQL())
@@ -713,7 +713,7 @@ class DateTimeTemplate private constructor(
         }
 
         private fun yearMonth(provider: CastDataProvider?): kotlin.IntArray {
-            val dateValue = provider!!.currentTimestamp().getDateValue()
+            val dateValue = provider!!.currentTimestamp().dateValue
             return kotlin.intArrayOf(
                 DateTimeUtils.yearFromDateValue(dateValue),
                 DateTimeUtils.monthFromDateValue(dateValue)

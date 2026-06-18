@@ -477,15 +477,15 @@ class IntervalUtils private constructor() {
             val r: BigInteger
             when (interval.getQualifier()) {
                 IntervalQualifier.YEAR ->
-                    r = BigInteger.valueOf(interval.getLeading()).multiply(MONTHS_PER_YEAR_BI)
+                    r = BigInteger.valueOf(interval.leading).multiply(MONTHS_PER_YEAR_BI)
                 IntervalQualifier.MONTH ->
-                    r = BigInteger.valueOf(interval.getLeading())
+                    r = BigInteger.valueOf(interval.leading)
                 IntervalQualifier.DAY ->
-                    r = BigInteger.valueOf(interval.getLeading()).multiply(NANOS_PER_DAY_BI)
+                    r = BigInteger.valueOf(interval.leading).multiply(NANOS_PER_DAY_BI)
                 IntervalQualifier.HOUR ->
-                    r = BigInteger.valueOf(interval.getLeading()).multiply(NANOS_PER_HOUR_BI)
+                    r = BigInteger.valueOf(interval.leading).multiply(NANOS_PER_HOUR_BI)
                 IntervalQualifier.MINUTE ->
-                    r = BigInteger.valueOf(interval.getLeading()).multiply(NANOS_PER_MINUTE_BI)
+                    r = BigInteger.valueOf(interval.leading).multiply(NANOS_PER_MINUTE_BI)
                 IntervalQualifier.SECOND ->
                     r = intervalToAbsolute(interval, NANOS_PER_SECOND_BI)
                 IntervalQualifier.YEAR_TO_MONTH ->
@@ -514,8 +514,8 @@ class IntervalUtils private constructor() {
         }
 
         private fun intervalToAbsolute(interval: ValueInterval, multiplier: BigInteger): BigInteger {
-            return BigInteger.valueOf(interval.getLeading()).multiply(multiplier)
-                .add(BigInteger.valueOf(interval.getRemaining()))
+            return BigInteger.valueOf(interval.leading).multiply(multiplier)
+                .add(BigInteger.valueOf(interval.remaining))
         }
 
         /**

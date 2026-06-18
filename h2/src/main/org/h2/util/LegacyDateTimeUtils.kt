@@ -171,7 +171,7 @@ object LegacyDateTimeUtils {
     @JvmStatic
     fun toDate(provider: CastDataProvider?, timeZone: TimeZone?, value: Value): Date? {
         return if (value !== ValueNull.INSTANCE) {
-            Date(getMillis(provider, timeZone, value.convertToDate(provider).getDateValue(), 0))
+            Date(getMillis(provider, timeZone, value.convertToDate(provider).dateValue, 0))
         } else {
             null
         }
@@ -197,7 +197,7 @@ object LegacyDateTimeUtils {
                 value = value.convertTo(TypeInfo.TYPE_TIME, provider)
         }
         return Time(
-            getMillis(provider, timeZone, DateTimeUtils.EPOCH_DATE_VALUE.toLong(), (value as ValueTime).getNanos())
+            getMillis(provider, timeZone, DateTimeUtils.EPOCH_DATE_VALUE.toLong(), (value as ValueTime).nanos)
         )
     }
 
@@ -223,18 +223,18 @@ object LegacyDateTimeUtils {
         when (value.getValueType()) {
             Value.TIMESTAMP_TZ -> {
                 val v = value as ValueTimestampTimeZone
-                val timeNanos = v.getTimeNanos()
+                val timeNanos = v.timeNanos
                 val ts = Timestamp(
-                    DateTimeUtils.absoluteDayFromDateValue(v.getDateValue()) * MILLIS_PER_DAY +
-                        timeNanos / 1_000_000 - v.getTimeZoneOffsetSeconds() * 1_000
+                    DateTimeUtils.absoluteDayFromDateValue(v.dateValue) * MILLIS_PER_DAY +
+                        timeNanos / 1_000_000 - v.timeZoneOffsetSeconds * 1_000
                 )
                 ts.nanos = (timeNanos % NANOS_PER_SECOND).toInt()
                 return ts
             }
             else -> {
                 val v = value as ValueTimestamp
-                val timeNanos = v.getTimeNanos()
-                val ts = Timestamp(getMillis(provider, timeZone, v.getDateValue(), timeNanos))
+                val timeNanos = v.timeNanos
+                val ts = Timestamp(getMillis(provider, timeZone, v.dateValue, timeNanos))
                 ts.nanos = (timeNanos % NANOS_PER_SECOND).toInt()
                 return ts
             }

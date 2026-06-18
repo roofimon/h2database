@@ -222,8 +222,8 @@ class JSR310Utils private constructor() {
                 throw DbException.get(ErrorCode.DATA_CONVERSION_ERROR_1, null as Throwable?, value.string)
             }
             val v = value as ValueInterval
-            val qualifier = v.qualifier
-            val negative = v.isNegative
+            val qualifier = v.getQualifier()
+            val negative = v.isNegative()
             val leading = v.leading
             val remaining = v.remaining
             val y = Value.convertToInt(IntervalUtils.yearsFromInterval(qualifier, negative, leading, remaining), null)
