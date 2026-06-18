@@ -3,7 +3,7 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.jmx;
+package org.h2.jmx
 
 /**
  * Information and management operations for the given database.
@@ -11,21 +11,21 @@ package org.h2.jmx;
  * @author Eric Dong
  * @author Thomas Mueller
  */
-public interface DatabaseInfoMBean {
+interface DatabaseInfoMBean {
 
     /**
      * Is the database open in exclusive mode?
      *
      * @return true if the database is open in exclusive mode, false otherwise
      */
-    boolean isExclusive();
+    fun isExclusive(): Boolean
 
     /**
      * Is the database read-only?
      *
      * @return true if the database is read-only, false otherwise
      */
-    boolean isReadOnly();
+    fun isReadOnly(): Boolean
 
     /**
      * The database compatibility mode (REGULAR if no compatibility mode is
@@ -33,77 +33,77 @@ public interface DatabaseInfoMBean {
      *
      * @return the database mode
      */
-    String getMode();
+    fun getMode(): String
 
     /**
      * The number of write operations since the database was opened.
      *
      * @return the write count
      */
-    long getFileWriteCount();
+    fun getFileWriteCount(): Long
 
     /**
      * The file read count since the database was opened.
      *
      * @return the read count
      */
-    long getFileReadCount();
+    fun getFileReadCount(): Long
 
     /**
      * The database file size in KB.
      *
      * @return the number of pages
      */
-    long getFileSize();
+    fun getFileSize(): Long
 
     /**
      * The maximum cache size in KB.
      *
      * @return the maximum size
      */
-    int getCacheSizeMax();
+    fun getCacheSizeMax(): Int
 
     /**
      * Change the maximum size.
      *
      * @param kb the cache size in KB.
      */
-    void setCacheSizeMax(int kb);
+    fun setCacheSizeMax(kb: Int)
 
     /**
      * The current cache size in KB.
      *
      * @return the current size
      */
-    int getCacheSize();
+    fun getCacheSize(): Int
 
     /**
      * The database version.
      *
      * @return the version
      */
-    String getVersion();
+    fun getVersion(): String
 
     /**
      * The trace level (0 disabled, 1 error, 2 info, 3 debug).
      *
      * @return the level
      */
-    int getTraceLevel();
+    fun getTraceLevel(): Int
 
     /**
      * Set the trace level.
      *
      * @param level the new value
      */
-    void setTraceLevel(int level);
+    fun setTraceLevel(level: Int)
 
     /**
      * List the database settings.
      *
      * @return the database settings
      */
-    String listSettings();
+    fun listSettings(): String
 
     /**
      * List sessions, including the queries that are in
@@ -111,6 +111,5 @@ public interface DatabaseInfoMBean {
      *
      * @return information about the sessions
      */
-    String listSessions();
-
+    fun listSessions(): String
 }
