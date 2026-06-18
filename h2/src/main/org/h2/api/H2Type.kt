@@ -332,15 +332,13 @@ class H2Type private constructor(private val typeInfo: TypeInfo, field: String) 
         @JvmStatic
         fun row(vararg fieldTypes: H2Type): H2Type {
             val degree = fieldTypes.size
-            val row = arrayOfNulls<Typed>(degree)
+            val row = Array<Typed>(degree) { fieldTypes[it].typeInfo }
             val builder = StringBuilder("row(")
             for (i in 0 until degree) {
-                val t = fieldTypes[i]
-                row[i] = t.typeInfo
                 if (i > 0) {
                     builder.append(", ")
                 }
-                builder.append(t.field)
+                builder.append(fieldTypes[i].field)
             }
             return H2Type(
                 TypeInfo.getTypeInfo(Value.ROW, -1L, -1, ExtTypeInfoRow(row)),
