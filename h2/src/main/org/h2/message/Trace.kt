@@ -70,7 +70,7 @@ class Trace {
      * @param t the exception
      * @param s the message
      */
-    fun error(t: Throwable?, s: String) {
+    fun error(t: Throwable?, s: String?) {
         if (isEnabled(TraceSystem.ERROR)) {
             traceWriter.write(TraceSystem.ERROR, module, s, t)
         }
@@ -95,7 +95,7 @@ class Trace {
      *
      * @param s the message
      */
-    fun info(s: String) {
+    fun info(s: String?) {
         if (isEnabled(TraceSystem.INFO)) {
             traceWriter.write(TraceSystem.INFO, module, s, null)
         }
@@ -120,7 +120,7 @@ class Trace {
      * @param t the exception
      * @param s the message
      */
-    fun info(t: Throwable?, s: String) {
+    fun info(t: Throwable?, s: String?) {
         if (isEnabled(TraceSystem.INFO)) {
             traceWriter.write(TraceSystem.INFO, module, s, t)
         }
@@ -188,7 +188,7 @@ class Trace {
      *
      * @param s the message
      */
-    fun debug(s: String) {
+    fun debug(s: String?) {
         if (isEnabled(TraceSystem.DEBUG)) {
             traceWriter.write(TraceSystem.DEBUG, module, s, null)
         }
@@ -199,7 +199,7 @@ class Trace {
      * @param t the exception
      * @param s the message
      */
-    fun debug(t: Throwable?, s: String) {
+    fun debug(t: Throwable?, s: String?) {
         if (isEnabled(TraceSystem.DEBUG)) {
             traceWriter.write(TraceSystem.DEBUG, module, s, t)
         }

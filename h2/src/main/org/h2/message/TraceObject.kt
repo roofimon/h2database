@@ -193,82 +193,82 @@ abstract class TraceObject {
         /**
          * The trace type id  for callable statements.
          */
-        protected const val CALLABLE_STATEMENT = 0
+        const val CALLABLE_STATEMENT = 0
 
         /**
          * The trace type id  for connections.
          */
-        protected const val CONNECTION = 1
+        const val CONNECTION = 1
 
         /**
          * The trace type id  for database meta data objects.
          */
-        protected const val DATABASE_META_DATA = 2
+        const val DATABASE_META_DATA = 2
 
         /**
          * The trace type id  for prepared statements.
          */
-        protected const val PREPARED_STATEMENT = 3
+        const val PREPARED_STATEMENT = 3
 
         /**
          * The trace type id  for result sets.
          */
-        protected const val RESULT_SET = 4
+        const val RESULT_SET = 4
 
         /**
          * The trace type id  for result set meta data objects.
          */
-        protected const val RESULT_SET_META_DATA = 5
+        const val RESULT_SET_META_DATA = 5
 
         /**
          * The trace type id  for savepoint objects.
          */
-        protected const val SAVEPOINT = 6
+        const val SAVEPOINT = 6
 
         /**
          * The trace type id  for statements.
          */
-        protected const val STATEMENT = 8
+        const val STATEMENT = 8
 
         /**
          * The trace type id  for blobs.
          */
-        protected const val BLOB = 9
+        const val BLOB = 9
 
         /**
          * The trace type id  for clobs.
          */
-        protected const val CLOB = 10
+        const val CLOB = 10
 
         /**
          * The trace type id  for parameter meta data objects.
          */
-        protected const val PARAMETER_META_DATA = 11
+        const val PARAMETER_META_DATA = 11
 
         /**
          * The trace type id  for data sources.
          */
-        protected const val DATA_SOURCE = 12
+        const val DATA_SOURCE = 12
 
         /**
          * The trace type id  for XA data sources.
          */
-        protected const val XA_DATA_SOURCE = 13
+        const val XA_DATA_SOURCE = 13
 
         /**
          * The trace type id  for transaction ids.
          */
-        protected const val XID = 15
+        const val XID = 15
 
         /**
          * The trace type id  for array objects.
          */
-        protected const val ARRAY = 16
+        const val ARRAY = 16
 
         /**
          * The trace type id  for SQLXML objects.
          */
-        protected const val SQLXML = 17
+        const val SQLXML = 17
 
         private const val LAST = SQLXML + 1
         private val ID = AtomicIntegerArray(LAST)

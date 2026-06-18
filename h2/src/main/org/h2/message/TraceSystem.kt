@@ -180,11 +180,11 @@ open class TraceSystem
         return levelFile
     }
 
-    override fun write(level: Int, moduleId: Int, s: String, t: Throwable?) {
+    override fun write(level: Int, moduleId: Int, s: String?, t: Throwable?) {
         write(level, Trace.MODULE_NAMES[moduleId], s, t)
     }
 
-    override fun write(level: Int, module: String, s: String, t: Throwable?) {
+    override fun write(level: Int, module: String, s: String?, t: Throwable?) {
         // level <= levelSystemOut: the system out level is set higher
         // level > levelMax: the level for this module is set higher
         val logToSystemOut = level <= levelSystemOut || level > levelMax
@@ -361,7 +361,7 @@ open class TraceSystem
 
         private var DATE_TIME_FORMATTER: DateTimeFormatter? = null
 
-        private fun format(module: String, s: String): String {
+        private fun format(module: String, s: String?): String {
             var dateTimeFormatter = DATE_TIME_FORMATTER
             if (dateTimeFormatter == null) {
                 dateTimeFormatter = initTimeFormatter()
