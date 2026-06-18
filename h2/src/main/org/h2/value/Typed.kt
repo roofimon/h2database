@@ -3,18 +3,17 @@
  * and the EPL 1.0 (https://h2database.com/html/license.html).
  * Initial Developer: H2 Group
  */
-package org.h2.value;
+package org.h2.value
 
 /**
  * An object with data type.
  */
-public interface Typed {
+interface Typed {
 
     /**
      * Returns the data type.
      *
      * @return the data type
      */
-    TypeInfo getType();
-
+    fun getType(): TypeInfo
 }
